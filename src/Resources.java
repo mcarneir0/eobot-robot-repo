@@ -15,34 +15,33 @@ import java.net.http.HttpResponse.BodyHandlers;
 public class Resources {
 	
 	private static final String
-		ID = "2312598",
-		API = "25a018891381480a9f21",
-		email = "matheusfeitosa@outlook.com",
-		baseURL = "https://www.eobot.com/api.aspx?";		/*   Eobot info   */
+		ID = "",										// Seu ID do Eobot
+		API = "",										// Sua chave API encontrada em https://www.eobot.com/profile
+		email = "",										// Seu email de cadastro no eobot
+		baseURL = "https://www.eobot.com/api.aspx?";	// N√ÉO ALTERAR, URL utilizada para requisi√ß√µes API
 	
 	private static final String
-		TelegramURL = "https://api.telegram.org/bot958905117:AAGkBoRdE3rdwMal4r7tEA6gee0wCbkLWUc/",		/*   Telegram info   */
-		chatID = "376293662";
+		TelegramURL = "",		// Insira a URL fornecida pelo Telegram BotFather na cria√ß√£o do seu bot, ex: https://api.telegram.org/botxxxxxxxxx:AbCdEfGhIjKlMnOpQrStUvWxYz0123456789/
+		chatID = "";			// Inicie o chat com o seu bot para obter esse c√≥digo, mais informa√ß√µes em https://core.telegram.org/bots/api#getting-updates
 	
 	static final DecimalFormat
 		df = new DecimalFormat("#,##0.00"),							/*   Formatadores de double   */
 		porc = new DecimalFormat("#0.00");
 	
-	static final DateTimeFormatter									/*	DefiniÁıes do hor·rio	*/
+	static final DateTimeFormatter									/*	Defini√ß√µes do hor√°rio	*/
 		dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 	
 	static HttpClient client = HttpClient.newHttpClient();			/*   Recursos do HTTP   */
 	static HttpResponse<String> response;
 	static HttpRequest req;
 	
-	private double													/*   Vari·veis do programa   */
+	private double											/*   Vari√°veis do programa   */
 		btcP = 0,		btcPAnt = 0,
 		open = 0,		perc = 0;
 	
 	private int offCounter = 0;
 	
 	private String
-		ghs5 = "",		ghs5Ant = "",
 		ghs6 = "",		ghs6Ant = "",		ghs6Ini = "0.0",		ghs6G = "0.0",
 		mining = "",	miningAnt = "",
 		saldo = "",		saldoAnt = "",		saldoIni = "0.0",		saldoG = "0.0";
@@ -53,12 +52,12 @@ public class Resources {
 		ganhoBTC = false,	ganhoGHS6 = false;
 		
 	
-	static String													/*   Textos do Telegram   */
+	static String											/*   Textos do Telegram   */
 		btcT = "",		btcPT = "",		btcGT = "",
-		ghs5T = "",		ghs6T = "",		ghs6GT = "";
+		ghs6T = "",		ghs6GT = "";
 	
 	static final String
-		vg = "_Vis„o%20Geral_%0A",
+		vg = "_Vis√£o%20Geral_%0A",
 		minBTC =  "%C2%AB%20%20_Minerando%20BTC_%20%20%C2%BB%0A",
 		minGHS6 = "%C2%AB%20%20_Minerando%20GHS%206.0_%20%20%C2%BB%0A";
 	
@@ -66,13 +65,13 @@ public class Resources {
 	
 	public double getOpen() {
 		
-		req = HttpRequest.newBuilder(URI.create("https://api-pub.bitfinex.com/v2/platform/status")).build();	// Status do servidor; 1 = OK, 0 = manutenÁ„o
+		req = HttpRequest.newBuilder(URI.create("https://api-pub.bitfinex.com/v2/platform/status")).build();	// Status do servidor; 1 = OK, 0 = manuten√ß√£o
 		
 		try {	response = client.send(req, BodyHandlers.ofString());	}
 		
 		catch (IOException | InterruptedException e) {
 			System.out.println("\nAlgo deu errado no getOpen\n");
-			sendMessage(erroT("Erro%20de%20conex„o%20no%20getOpen%20!!!"));
+			sendMessage(erroT("Erro%20de%20conex√£o%20no%20getOpen%20!!!"));
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -85,18 +84,18 @@ public class Resources {
 		
 		catch (IOException | InterruptedException e) {
 			System.out.println("\nAlgo deu errado no getOpen\n");
-			sendMessage(erroT("Erro%20de%20conex„o%20no%20getOpen%20!!!"));
+			sendMessage(erroT("Erro%20de%20conex√£o%20no%20getOpen%20!!!"));
 			e.printStackTrace();
 			System.exit(0);
 		}
 		
 		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getOpen\n");
-			sendMessage(erroT("Erro%20de%20conex„o%20no%20getOpen%20!!!"));
+			System.out.println("\nErro de conex√£o no getOpen\n");
+			sendMessage(erroT("Erro%20de%20conex√£o%20no%20getOpen%20!!!"));
 			System.exit(0);
 		}
 		
-		String[] separador = response.body().split("\\,");		// Separa as informaÁıes em linhas a cada vÌrgula
+		String[] separador = response.body().split("\\,");		// Separa as informa√ß√µes em linhas a cada v√≠rgula
 		
 		if (debug) {
 			System.out.println("\n/*\tgetOpen\n*");
@@ -122,7 +121,7 @@ public class Resources {
 		}
 		
 		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getBTCprice\n");
+			System.out.println("\nErro de conex√£o no getBTCprice\n");
 			return btcPAnt;
 		}
 		
@@ -162,7 +161,7 @@ public class Resources {
 		}
 		
 		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getMining\n");
+			System.out.println("\nErro de conex√£o no getMining\n");
 			return miningAnt;
 		}
 		
@@ -183,10 +182,7 @@ public class Resources {
 			System.out.println("* Return = " + response.body() + "\n*/");
 		}
 		
-	//	if (response.body().contains("BTC"))	{ mining = "BTC";	}
-	//	if (response.body().contains("GHS6"))	{ mining = "GHS 6.0";	}
-		
-		mining = (response.body().contains("BTC")) ? "BTC" : "GHS 6.0";
+			mining = (response.body().contains("BTC")) ? "BTC" : "GHS 6.0";
 		
 		miningAnt = mining;
 		return mining;
@@ -206,7 +202,7 @@ public class Resources {
 		}
 		
 		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getBTC\n");
+			System.out.println("\nErro de conex√£o no getBTC\n");
 			return saldoAnt;
 		}
 		
@@ -221,7 +217,7 @@ public class Resources {
 			return saldoAnt;
 		}
 		
-		String[] separador = response.body().split("\\;");		// Separa as informaÁıes em linhas a cada ;
+		String[] separador = response.body().split("\\;");		// Separa as informa√ß√µes em linhas a cada ;
 		
 		if (debug) {
 			System.out.println("\n/*\tgetBTC\n*");
@@ -240,56 +236,7 @@ public class Resources {
 		saldoAnt = saldo;
 		return saldo;
 	}
-	
-	public String getGHS5() {
 		
-		req = HttpRequest.newBuilder(URI.create(baseURL + "total=" + ID)).build();
-		
-		try {	response = client.send(req, BodyHandlers.ofString());	}
-		
-		catch (IOException | InterruptedException e) {
-			System.out.println("\nAlgo deu errado no getGHS5\n");
-			sendMessage(erroT("Algo%20deu%20errado%20no%20getGHS5%20!!!"));
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
-		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getGHS5\n");
-			return ghs5Ant;
-		}
-		
-		if (response.body().contains("off") || response.body().contains("temp")){
-			
-			offCounter++;
-			
-			if (offCounter == 3) {	checkOn(response.body());	}
-			
-			else if (ghs5Ant.isBlank()) {	checkOn(response.body());	}
-			
-			return ghs5Ant;
-		}
-		
-		String[] separador = response.body().split("\\;");		// Separa as informaÁıes em linhas a cada ;
-		
-		if (debug) {
-			System.out.println("\n/*\tgetGHS5\n*");
-			System.out.println("* " + req + "\n*");
-			for (int i = 0; i < separador.length; i++) { System.out.println("* " + separador[i] + "\t" + i); }	// imprimir tudo em linhas
-			System.out.println("*\n* Return = " + separador[25] + "\t(25)\n*/");
-		}
-		
-		for (int i=0;i<separador.length;i++) {
-			if (separador[i].contains("GHS5")) {
-				ghs5 = separador[i].substring(5);		// Apaga os 5 primeiros chars
-				break;
-			}
-		}
-		
-		ghs5Ant = ghs5;
-		return ghs5;
-	}
-	
 	public String getGHS6() {
 		
 		req = HttpRequest.newBuilder(URI.create(baseURL + "total=" + ID)).build();
@@ -304,7 +251,7 @@ public class Resources {
 		}
 		
 		if (response.statusCode() != 200) {
-			System.out.println("\nErro de conex„o no getGHS6\n");
+			System.out.println("\nErro de conex√£o no getGHS6\n");
 			return ghs6Ant;
 		}
 		
@@ -319,7 +266,7 @@ public class Resources {
 			return ghs6Ant;
 		}
 		
-		String[] separador = response.body().split("\\;");		// Separa as informaÁıes em linhas a cada ;
+		String[] separador = response.body().split("\\;");		// Separa as informa√ß√µes em linhas a cada ;
 		
 		if (debug) {
 			System.out.println("\n/*\tgetGHS6\n*");
@@ -358,7 +305,7 @@ public class Resources {
 			System.exit(0);
 		}
 		
-		if (response.statusCode() != 200) {	System.out.println("\nErro de conex„o no setMining\n"); }
+		if (response.statusCode() != 200) {	System.out.println("\nErro de conex√£o no setMining\n"); }
 		
 		if (debug) {
 			System.out.println("\n/*\tsetMining\n*");
@@ -382,7 +329,7 @@ public class Resources {
 			System.exit(0);
 		}
 		
-		if (response.statusCode() != 200) {	System.out.println("\nErro de conex„o no sendMessage\n"); }
+		if (response.statusCode() != 200) {	System.out.println("\nErro de conex√£o no sendMessage\n"); }
 		
 		if (debug) {
 			System.out.println("\n/*\tsendMessage\n*");
@@ -424,7 +371,7 @@ public class Resources {
 			System.out.println("* String = " + resp + "\n*/");
 		}
 		
-		if (resp.contains("off") || resp.contains("temp") || resp.isBlank() || resp.contentEquals("[0]"))	{	// Encerra o programa nessas condiÁıes
+		if (resp.contains("off") || resp.contains("temp") || resp.isBlank() || resp.contentEquals("[0]"))	{	// Encerra o programa nessas condi√ß√µes
 			
 			sendMessage(erroT("EOBOT%20OFFLINE!"));
 			System.out.println("\n###\tEobot Offline\t###\n");
@@ -432,7 +379,7 @@ public class Resources {
 			if (resp.isBlank()) {				resp = "~ Resposta em branco ~";	}
 			if (resp.contentEquals("[0]")) {	resp = "Servidor offline";	}
 			
-			StackTraceElement[] stack = Thread.currentThread().getStackTrace();		// Identifica qual mÈtodo chamou o checkOn
+			StackTraceElement[] stack = Thread.currentThread().getStackTrace();		// Identifica qual m√©todo chamou o checkOn
 			StackTraceElement element = stack[2];
 			
 			System.out.println("Causado pelo:\t" + element.getMethodName());
@@ -444,11 +391,11 @@ public class Resources {
 	
 	public String erroT(String txt) {
 		
-	/*	space = %20		URL Encoding
+	/*	espa√ßo = %20		##	URL Encoding  ##
 	 * 	enter = %0A
 	 * 	# = %23	
-	 *	´ = %C2%AB
-	 *	ª = %C2%BB
+	 *	¬´ = %C2%AB
+	 *	¬ª = %C2%BB
 	 *	+ = %2B
 	 */
 		
@@ -472,8 +419,8 @@ public class Resources {
 		
 		if (ghs6Ini.equals("0.0")) { ganhoBTC = true;	ganhoGHS6 = true;	return;	}
 		
-		ghs6G =		new BigDecimal(Double.parseDouble(ghs6) - Double.parseDouble(ghs6Ini)).toPlainString();		// evitar notaÁ„o cientÌfica
-		saldoG =	new BigDecimal(Double.parseDouble(saldo) - Double.parseDouble(saldoIni)).toPlainString();	// evitar notaÁ„o cientÌfica
+		ghs6G =		new BigDecimal(Double.parseDouble(ghs6) - Double.parseDouble(ghs6Ini)).toPlainString();		// evitar nota√ß√£o cient√≠fica
+		saldoG =	new BigDecimal(Double.parseDouble(saldo) - Double.parseDouble(saldoIni)).toPlainString();	// evitar nota√ß√£o cient√≠fica
 		
 		if (ghs6G.length() > 10) {
 			
@@ -515,7 +462,7 @@ public class Resources {
 	public boolean calc() {
 		
 		getBTCprice();
-		perc = ((btcP - open) / open) * 100;		// Calcula a variaÁ„o de preÁo em porcentagem
+		perc = ((btcP - open) / open) * 100;		// Calcula a varia√ß√£o de pre√ßo em porcentagem
 		
 		if (isForced) {
 			getMining();
@@ -524,7 +471,7 @@ public class Resources {
 		
 		getMining();
 		
-		if (btcP < open) {						// Se BTC est· em baixa, minerar BTC
+		if (btcP < open) {						// Se BTC est√° em baixa, minerar BTC
 			
 			if (mining.contains("BTC")) {	return var = false;	}
 			
@@ -536,7 +483,7 @@ public class Resources {
 			}
 		}
 		
-		else {									// Se BTC est· em alta, minerar GHS
+		else {									// Se BTC est√° em alta, minerar GHS
 			
 			if (mining.contains("GHS")) {	return var = true;	}
 			
@@ -552,14 +499,12 @@ public class Resources {
 	public void info() {
 		
 		getBTC();
-//		getGHS5();
 		getGHS6();
 		calc();
 		calcGanho();
 		
 		System.out.println("\n" + getTime() + " -> Minerando " + mining);
 		System.out.println("BTC: " + saldo + " ( " + saldoG + " )");
-//		System.out.println("GHS 5.0: " + ghs5);
 		System.out.println("GHS 6.0: " + ghs6 + " ( " + ghs6G + " )");
 		System.out.print("1 BTC = $ " + df.format(btcP) + " ->");
 		
