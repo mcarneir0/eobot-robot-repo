@@ -1,56 +1,50 @@
 package app;
 
-public class Launcher {			//	
+public class Launcher {
 
 	public static void main(String[] args) throws InterruptedException {
 		
 		Resources app = new Resources();
 		
-		for (String arg : args) {											// Obter par‚metros de inicializaÁ„o
+		for (String arg : args) {										// Obter par√¢metros de inicializa√ß√£o
 			
-			if (arg.equalsIgnoreCase("debug")) {							// Ativar debug mode
+			if (arg.equalsIgnoreCase("debug")) {								// Ativar debug mode
 				
 				Resources.debug = true;
 				System.out.println("\n##   Debug mode Ativado   ##\n");
 			}
 			
-			if (arg.contains("force-")) {									// ForÁar mineraÁ„o
+			if (arg.contains("force-")) {									// For√ßar minera√ß√£o
 				
 				String[] argForce = arg.split("-");
 				
 				if ( !argForce[1].equalsIgnoreCase("BTC") && !argForce[1].equalsIgnoreCase("GHS6")) {
-					System.out.println("\nN„o È possÌvel forÁar a mineraÁ„o na opÁ„o inserida: " + argForce[1]);
-					System.out.println("\nOpÁıes disponÌveis: BTC GHS6\n");
+					System.out.println("\nN√£o √© poss√≠vel for√ßar a minera√ß√£o na op√ß√£o inserida: " + argForce[1]);
+					System.out.println("\nOp√ß√µes dispon√≠veis: BTC GHS6\n");
 					System.exit(0);
 				}
 				
 				Resources.isForced = true;
 				app.setMining(argForce[1].toUpperCase());
 				
-				System.out.println("\n##   ForÁando mineraÁ„o de " + argForce[1].toUpperCase() + "   ##\n");
+				System.out.println("\n##   For√ßando minera√ß√£o de " + argForce[1].toUpperCase() + "   ##\n");
 			}
 			
-			if (arg.equalsIgnoreCase("noTG")) {								// N„o enviar mensagens no Telegram
+			if (arg.equalsIgnoreCase("noTG")) {								// N√£o enviar mensagens no Telegram
 				
 				Resources.noTG = true;
-				System.out.println("\n##	N„o enviar mensagens no Telegram	##\n");
+				System.out.println("\n##	N√£o enviar mensagens no Telegram	##\n");
 			}
 		}	
 		
 /*	=========================================================================================================================	*/		
 		
-		final boolean testMode = false;
+		final boolean testMode = false;		// Defina true para entrar no bloco de testes abaixo; falso para executar o programa normalmente
 		
 		if (testMode) {
 			
 			Resources.isForced = true;		Resources.debug = true;		Resources.noTG = false;
 			
-			app.getOpen();
-			app.info();
-			app.VisaoGeral();
-			Thread.sleep(130000);		// Pausa de 120k ms = 120 s
-			app.info();
-			app.setTG();
 			
 		}
 		
@@ -62,7 +56,7 @@ public class Launcher {			//
 
 				app.info();
 
-				if (loop == 0 || loop == (360*0.5)) {	app.VisaoGeral();	}	// Vis„o geral no Telegram a cada 6 hr
+				if (loop == 0 || loop == (360*0.5)) {	app.VisaoGeral();	}	// Vis√£o geral no Telegram a cada 6 hr
 			
 				if (loop == 359) {												// Zera o contador para iniciar novamente
 					
